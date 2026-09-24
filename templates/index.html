@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="LinguaFlow - Fast, simple and intelligent language translation."
+    >
+
+    <title>LinguaFlow — AI Translation Workspace</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <!-- =========================
+         APP SHELL
+    ========================== -->
+
+    <div class="app-shell">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-top">
+
+                <a href="/" class="brand">
+
+                    <div class="brand-mark">
+                        <span>L</span>
+                    </div>
+
+                    <div class="brand-copy">
+                        <strong>LinguaFlow</strong>
+                        <span>Translation Studio</span>
+                    </div>
+
+                </a>
+
+
+                <nav class="sidebar-nav">
+
+                    <div class="nav-label">
+                        WORKSPACE
+                    </div>
+
+                    <a
+                        href="/"
+                        class="nav-item active"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 5h16M4 12h16M4 19h10"/>
+                            </svg>
+                        </span>
+
+                        <span>
+                            Translator
+                        </span>
+                    </a>
+
+
+                    <button
+                        class="nav-item"
+                        type="button"
+                        id="historyNav"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 12a9 9 0 1 0 3-6.7"/>
+                                <path d="M3 4v5h5"/>
+                                <path d="M12 7v5l3 2"/>
+                            </svg>
+                        </span>
+
+                        <span>
+                            History
+                        </span>
+                    </button>
+
+
+                    <button
+                        class="nav-item"
+                        type="button"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V20h-2.6v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H6V11h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4h2.6v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1H20v2.6h-.1a1.7 1.7 0 0 0-1.5 1.3z"/>
+                            </svg>
+                        </span>
+
+                        <span>
+                            Settings
+                        </span>
+                    </button>
+
+                </nav>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-status">
+
+                    <span class="status-dot"></span>
+
+                    <div>
+                        <strong>Translation Engine</strong>
+                        <span>Ready to translate</span>
+                    </div>
+
+                </div>
+
+
+                <div class="sidebar-footer">
+                    <span>LinguaFlow</span>
+                    <span>v1.0</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+            <!-- TOP BAR -->
+
+            <header class="topbar">
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                    aria-label="Open menu"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+
+                <div class="topbar-title">
+
+                    <span class="page-kicker">
+                        LANGUAGE WORKSPACE
+                    </span>
+
+                    <h1>
+                        Translator
+                    </h1>
+
+                </div>
+
+
+                <div class="topbar-actions">
+
+                    <button
+                        id="themeToggle"
+                        class="icon-button"
+                        type="button"
+                        aria-label="Toggle dark mode"
+                        title="Toggle theme"
+                    >
+                        <svg
+                            class="sun-icon"
+                            viewBox="0 0 24 24"
+                        >
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="4"
+                            />
+
+                            <path d="M12 2v2"/>
+                            <path d="M12 20v2"/>
+                            <path d="m4.93 4.93 1.41 1.41"/>
+                            <path d="m17.66 17.66 1.41 1.41"/>
+                            <path d="M2 12h2"/>
+                            <path d="M20 12h2"/>
+                            <path d="m6.34 17.66-1.41 1.41"/>
+                            <path d="m19.07 4.93-1.41 1.41"/>
+                        </svg>
+                    </button>
+
+
+                    <div class="profile">
+
+                        <div class="profile-avatar">
+                            L
+                        </div>
+
+                        <div class="profile-info">
+                            <strong>LinguaFlow</strong>
+                            <span>Workspace</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE BODY -->
+
+            <div class="page-container">
+
+                <!-- WELCOME -->
+
+                <section class="welcome-section">
+
+                    <div>
+
+                        <span class="welcome-badge">
+                            <span></span>
+                            AI-POWERED TRANSLATION
+                        </span>
+
+                        <h2>
+                            Translate anything,
+                            <span>anywhere.</span>
+                        </h2>
+
+                        <p>
+                            Transform your text between languages
+                            with a clean, fast and intuitive
+                            translation workspace.
+                        </p>
+
+                    </div>
+
+
+                    <div class="welcome-stat">
+
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3v18"/>
+                                <path d="M3 7h18"/>
+                                <path d="M5 7c.8 5 3.1 8 7 8s6.2-3 7-8"/>
+                                <path d="M7 21h10"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <strong>15+</strong>
+                            <span>Languages</span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- TRANSLATOR CARD -->
+
+                <section class="translator-card">
+
+                    <!-- LANGUAGE HEADER -->
+
+                    <div class="language-header">
+
+                        <div class="language-select-wrapper">
+
+                            <label for="sourceLanguage">
+                                FROM
+                            </label>
+
+                            <div class="select-box">
+
+                                <span class="language-globe">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="9"
+                                        />
+                                        <path d="M3 12h18"/>
+                                        <path d="M12 3c3 3 3 15 0 18"/>
+                                    </svg>
+                                </span>
+
+                                <select id="sourceLanguage">
+
+                                    <option value="">
+                                        Auto Detect
+                                    </option>
+
+                                    {% for code, name in languages.items() %}
+
+                                        <option value="{{ code }}">
+                                            {{ name }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                                <svg
+                                    class="select-arrow"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="m6 9 6 6 6-6"/>
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SWAP -->
+
+                        <button
+                            id="swapButton"
+                            class="swap-button"
+                            type="button"
+                            title="Swap languages"
+                            aria-label="Swap languages"
+                        >
+                            <svg viewBox="0 0 24 24">
+                                <path d="M7 7h13"/>
+                                <path d="m16 4 4 3-4 3"/>
+                                <path d="M17 17H4"/>
+                                <path d="m8 14-4 3 4 3"/>
+                            </svg>
+                        </button>
+
+
+                        <div class="language-select-wrapper">
+
+                            <label for="targetLanguage">
+                                TO
+                            </label>
+
+                            <div class="select-box">
+
+                                <span class="language-globe">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="9"
+                                        />
+                                        <path d="M3 12h18"/>
+                                        <path d="M12 3c3 3 3 15 0 18"/>
+                                    </svg>
+                                </span>
+
+                                <select id="targetLanguage">
+
+                                    {% for code, name in languages.items() %}
+
+                                        <option
+                                            value="{{ code }}"
+                                            {% if code == "ur" %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            {{ name }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                                <svg
+                                    class="select-arrow"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="m6 9 6 6 6-6"/>
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TRANSLATION PANELS -->
+
+                    <div class="translation-grid">
+
+                        <!-- SOURCE -->
+
+                        <div class="translation-panel source-panel">
+
+                            <div class="panel-top">
+
+                                <span class="panel-label">
+                                    YOUR TEXT
+                                </span>
+
+                                <button
+                                    id="clearButton"
+                                    class="panel-action"
+                                    type="button"
+                                >
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M3 6h18"/>
+                                        <path d="M8 6V4h8v2"/>
+                                        <path d="m19 6-1 15H6L5 6"/>
+                                    </svg>
+
+                                    Clear
+                                </button>
+
+                            </div>
+
+
+                            <textarea
+                                id="sourceText"
+                                maxlength="5000"
+                                placeholder="Type or paste your text here..."
+                                spellcheck="true"
+                            ></textarea>
+
+
+                            <div class="panel-bottom">
+
+                                <span
+                                    id="charCount"
+                                    class="character-count"
+                                >
+                                    0 / 5000
+                                </span>
+
+                                <span class="shortcut-hint">
+                                    Ctrl + Enter to translate
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RESULT -->
+
+                        <div class="translation-panel result-panel">
+
+                            <div class="panel-top">
+
+                                <span class="panel-label">
+                                    TRANSLATION
+                                </span>
+
+                                <button
+                                    id="copyButton"
+                                    class="panel-action"
+                                    type="button"
+                                >
+                                    <svg viewBox="0 0 24 24">
+                                        <rect
+                                            x="9"
+                                            y="9"
+                                            width="11"
+                                            height="11"
+                                            rx="2"
+                                        />
+
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+
+                                    Copy
+                                </button>
+
+                            </div>
+
+
+                            <div
+                                id="translationResult"
+                                class="translation-result empty-result"
+                            >
+                                <div class="result-placeholder">
+
+                                    <div class="placeholder-icon">
+
+                                        <svg viewBox="0 0 24 24">
+                                            <path d="M4 5h16"/>
+                                            <path d="M4 12h10"/>
+                                            <path d="M4 19h7"/>
+                                            <path d="m16 16 2 2 4-5"/>
+                                        </svg>
+
+                                    </div>
+
+                                    <strong>
+                                        Your translation will appear here
+                                    </strong>
+
+                                    <span>
+                                        Enter some text and click
+                                        Translate to get started.
+                                    </span>
+
+                                </div>
+                            </div>
+
+
+                            <div class="panel-bottom">
+
+                                <span
+                                    id="detectedLanguage"
+                                    class="detected-language"
+                                ></span>
+
+                                <span class="secure-label">
+
+                                    <svg viewBox="0 0 24 24">
+                                        <rect
+                                            x="5"
+                                            y="10"
+                                            width="14"
+                                            height="10"
+                                            rx="2"
+                                        />
+                                        <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                                    </svg>
+
+                                    Secure
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ERROR -->
+
+                    <div
+                        id="errorMessage"
+                        class="error-message hidden"
+                    ></div>
+
+
+                    <!-- ACTION AREA -->
+
+                    <div class="translator-actions">
+
+                        <div class="action-info">
+
+                            <div class="info-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                    />
+                                    <path d="M12 11v5"/>
+                                    <path d="M12 8h.01"/>
+                                </svg>
+                            </div>
+
+                            <span>
+                                Your text is processed securely
+                                through the translation service.
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            id="translateButton"
+                            class="translate-button"
+                            type="button"
+                        >
+
+                            <span
+                                id="loader"
+                                class="loader hidden"
+                            ></span>
+
+                            <span id="buttonText">
+                                Translate
+                            </span>
+
+                            <svg
+                                class="button-arrow"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M5 12h14"/>
+                                <path d="m13 6 6 6-6 6"/>
+                            </svg>
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- QUICK FEATURES -->
+
+                <section class="quick-features">
+
+                    <div class="feature">
+
+                        <div class="feature-icon purple">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2v20"/>
+                                <path d="M5 5h14"/>
+                                <path d="M5 19h14"/>
+                                <path d="M7 5c1 5 3 7 5 7s4-2 5-7"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Multiple Languages
+                            </strong>
+
+                            <span>
+                                Translate across 15+ languages
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon blue">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M13 2 3 14h8l-1 8 11-13h-8z"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Fast Translation
+                            </strong>
+
+                            <span>
+                                Get results in seconds
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon green">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 5 6v5c0 4.5 3 8.5 7 10 4-1.5 7-5.5 7-10V6z"/>
+                                <path d="m9 12 2 2 4-4"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Secure
+                            </strong>
+
+                            <span>
+                                Your API keys stay protected
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon orange">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 4h16v16H4z"/>
+                                <path d="M8 9h8"/>
+                                <path d="M8 13h6"/>
+                                <path d="M8 17h4"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Easy to Use
+                            </strong>
+
+                            <span>
+                                Simple and intuitive workspace
+                            </span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- HISTORY PREVIEW -->
+
+                <section
+                    id="historySection"
+                    class="history-section"
+                >
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span>
+                                YOUR ACTIVITY
+                            </span>
+
+                            <h3>
+                                Recent translations
+                            </h3>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="view-all-button"
+                        >
+                            View all
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 12h14"/>
+                                <path d="m13 6 6 6-6 6"/>
+                            </svg>
+                        </button>
+
+                    </div>
+
+
+                    <div class="empty-history">
+
+                        <div class="history-icon">
+
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 12a9 9 0 1 0 3-6.7"/>
+                                <path d="M3 4v5h5"/>
+                                <path d="M12 7v5l3 2"/>
+                            </svg>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                No recent translations
+                            </strong>
+
+                            <span>
+                                Your recent translation activity
+                                will appear here.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- FOOTER -->
+
+                <footer class="main-footer">
+
+                    <span>
+                        © 2026 LinguaFlow
+                    </span>
+
+                    <span class="footer-separator">
+                        •
+                    </span>
+
+                    <span>
+                        Built with Python & Flask
+                    </span>
+
+                    <span class="footer-spacer"></span>
+
+                    <span>
+                        Translation Studio
+                    </span>
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- MOBILE OVERLAY -->
+
+    <div
+        id="sidebarOverlay"
+        class="sidebar-overlay"
+    ></div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/app.js') }}"
+    ></script>
+
+</body>
+
+</html>
