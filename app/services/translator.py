@@ -1,18 +1,9 @@
-import os
-
 import requests
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 class TranslationService:
 
-    def __init__(self):
-        self.api_url = os.getenv(
-            "LIBRETRANSLATE_URL",
-            "http://localhost:5000",
-        ).rstrip("/")
+    API_URL = "https://api.mymemory.translated.net/get"
 
     def translate(
         self,
@@ -21,40 +12,37 @@ class TranslationService:
         source_language: str | None = None,
     ) -> dict:
 
-        source = source_language or "auto"
+        source = source_language or "en"
 
-        payload = {
+        params = {
             "q": text,
-            "source": source,
-            "target": target_language,
-            "format": "text",
+            "langpair": f"{source}|{target_language}",
         }
 
-        response = requests.post(
-            f"{self.api_url}/translate",
-            json=payload,
-            timeout=60,
+        response = requests.get(
+            self.API_URL,
+            params=params,
+            timeout=30,
         )
 
         if not response.ok:
-            try:
-                error_data = response.json()
-                error_message = error_data.get(
-                    "error",
-                    "Translation request failed.",
-                )
-            except ValueError:
-                error_message = (
-                    "Translation request failed."
-                )
-
-            raise RuntimeError(error_message)
+            raise RuntimeError(
+                "Translation service request failed."
+            )
 
         data = response.json()
 
-        translated_text = data.get(
-            "translatedText",
-            "",
+        if data.get("responseStatus") != 200:
+            raise RuntimeError(
+                data.get(
+                    "responseDetails",
+                    "Translation failed.",
+                )
+            )
+
+        translated_text = (
+            data.get("responseData", {})
+            .get("translatedText", "")
         )
 
         if not translated_text:
@@ -62,32 +50,7 @@ class TranslationService:
                 "No translation returned."
             )
 
-        detected_language = ""
-
-        detected_data = data.get(
-            "detectedLanguage"
-        )
-
-        if isinstance(detected_data, dict):
-            detected_language = detected_data.get(
-                "language",
-                "",
-            )
-
-        elif isinstance(detected_data, list):
-            if detected_data:
-                detected_language = (
-                    detected_data[0].get(
-                        "language",
-                        "",
-                    )
-                )
-
         return {
             "translation": translated_text,
-            "detected_language": (
-                detected_language
-                or source_language
-                or ""
-            ),
+            "detected_language": source,
         }
